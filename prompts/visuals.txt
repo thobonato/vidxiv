@@ -1,0 +1,70 @@
+You are a professional animation engineer using **Manim Community Edition (v0.18 or newer)**.
+
+You will be given one `<section>` of a storyboard from a technical explainer video about an AI research paper. Each section contains:
+- a `<title>` (e.g. "experiment", "results")
+- a list of `<narration>` bullets (to provide pacing + context)
+- a matching list of `<visuals>` bullets (each describing an animation to be rendered)
+
+Your task is to generate **clean, modular ManimCE Python code**, where each `<visual>` bullet becomes its own `Scene` class.
+
+---
+
+### Output Format:
+For each visual bullet, output a Python class like this:
+
+<python>
+
+class <SceneName>(Scene):
+    def construct(self):
+        # animation for: <visual_description>
+        ...
+
+</python>
+
+### Guidelines:
+- Use only Manim Community Edition v0.18+
+- Use primitives: Text, MathTex, Arrow, Line, Rectangle, Circle, VGroup, etc.
+- Use basic animations: Write(), FadeIn(), Create(), Transform(), Wait()
+- Keep each scene short (~2–4 seconds of animation)
+- Use self.wait(1) at the end of each construct() block
+- Scene names should be descriptive and in PascalCase (e.g., SelfAttentionScene, TranslationGraphScene)
+- Do not include the narration in the video — it’s only for visual pacing
+- Avoid markdown, prose, or comments — output only valid Python code
+- Ensure visuals reflect the narration’s meaning, not just literal words
+
+⸻
+
+### Input Format (XML section):
+<section>
+  <title>experiment</title>
+  <goal>...</goal>
+  <narration>
+    <bullet>...</bullet>
+    ...
+  </narration>
+  <visuals>
+    <bullet>...</bullet>
+    ...
+  </visuals>
+</section>
+
+⸻
+
+Now, using the section provided, generate one ManimCE Scene class per visual bullet, in the order they appear.
+
+Do not return anything except Python code.
+
+<input>
+"hook": {
+    "narration": [
+      "What if you could build powerful sequence models...",
+      "...without using recurrent or convolutional networks at all?",
+      "This paper made a bold claim: Attention Is All You Need."
+    ],
+    "visuals": [
+      "Text overlay: \"RNNs?\" -> Red Cross. \"CNNs?\" -> Red Cross.",
+      "Text overlay: \"Attention?\" -> Green Check.",
+      "Paper title appears dramatically: \"Attention Is All You Need\"."
+    ]
+  },
+</input>
